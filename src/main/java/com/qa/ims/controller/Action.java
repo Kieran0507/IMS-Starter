@@ -14,7 +14,7 @@ public enum Action {
 	CREATE("To save a new entity into the database"), READ("To read an entity from the database"),
 	UPDATE("To change an entity already in the database"), DELETE("To remove an entity from the database"),
 	RETURN("To return to domain selection"),ADDITEM("to add an item to an order"),REMOVEITEM("To remove an item from an order"),
-	TOTAL("To get the total amount from an order");
+	TOTAL("To get the total amount from an order"),READORDER("To read an order by its id");
 
 	public static final Logger LOGGER = LogManager.getLogger();
 

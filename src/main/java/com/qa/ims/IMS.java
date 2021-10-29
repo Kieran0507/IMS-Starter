@@ -112,6 +112,8 @@ public class IMS {
 		case TOTAL:
 			this.orders.total();
 			break;
+		case READORDER:
+			this.orders.readOrder();
 		case RETURN:
 			break;
 		default:

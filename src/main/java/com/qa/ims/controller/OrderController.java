@@ -22,7 +22,6 @@ public class OrderController implements CrudController<Order> {
 	private Utils utils;
 	private OrderLinesDAO olDAO;
 
-	
 	public OrderController(ItemDAO itemDAO, OrderDAO orderDAO, Utils utils, OrderLinesDAO olDAO) {
 		super();
 		this.itemDAO = itemDAO;
@@ -30,8 +29,6 @@ public class OrderController implements CrudController<Order> {
 		this.utils = utils;
 		this.olDAO = olDAO;
 	}
-
-	
 
 	@Override
 	public List<Order> readAll() {
@@ -72,9 +69,9 @@ public class OrderController implements CrudController<Order> {
 		return orderDAO.delete(id);
 	}
 
-	public OrderLines addItem(){
-		
-			LOGGER.info("Please enter the order ID");
+	public OrderLines addItem() {
+
+		LOGGER.info("Please enter the order ID");
 		Long orderId = utils.getLong();
 		LOGGER.info("Please enter the Item ID");
 		Long itemId = utils.getLong();
@@ -83,9 +80,6 @@ public class OrderController implements CrudController<Order> {
 		OrderLines orderL = olDAO.create(new OrderLines(orderId, itemId, quant));
 		LOGGER.info("Item has been added");
 		return orderL;
-		
-		
-		
 
 	}
 
@@ -109,9 +103,16 @@ public class OrderController implements CrudController<Order> {
 		}
 		LOGGER.info(total);
 		return total;
+	}
+
+	public List<OrderLines> readOrder() {
+		LOGGER.info("Please enter the Order_id");
+		Long orderId = utils.getLong();
 		
+		List<OrderLines> orderIds = olDAO.readOrderId(orderId);
+		LOGGER.info(orderIds);
 		
-		
+		return orderIds;
 
 	}
 
