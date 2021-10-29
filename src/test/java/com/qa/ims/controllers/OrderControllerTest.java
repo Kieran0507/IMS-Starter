@@ -33,7 +33,7 @@ public class OrderControllerTest {
 
 	@Mock
 	private OrderLinesDAO daoLines;
-	
+
 	@Mock
 	private ItemDAO iDao;
 
@@ -80,6 +80,7 @@ public class OrderControllerTest {
 
 		Mockito.verify(this.dao, Mockito.times(1)).update(updated);
 	}
+
 	@Test
 	public void testDelete() {
 		final long ID = 1L;
@@ -92,19 +93,21 @@ public class OrderControllerTest {
 		Mockito.verify(utils, Mockito.times(1)).getLong();
 		Mockito.verify(dao, Mockito.times(1)).delete(ID);
 	}
+
 	@Test
 	public void addItemTest() {
 		final long orderId = 1L, itemId = 1L, quant = 1L;
 		final OrderLines created = new OrderLines(orderId, itemId, quant);
-		
+
 		Mockito.when(utils.getLong()).thenReturn(orderId, itemId, quant);
 		Mockito.when(daoLines.create(created)).thenReturn(created);
-		
+
 		assertEquals(created, controller.addItem());
 
 		Mockito.verify(utils, Mockito.times(3)).getLong();
 		Mockito.verify(daoLines, Mockito.times(1)).create(created);
 	}
+
 	@Test
 	public void removeItemTest() {
 		final long ID = 1L;
@@ -117,23 +120,39 @@ public class OrderControllerTest {
 		Mockito.verify(utils, Mockito.times(1)).getLong();
 		Mockito.verify(daoLines, Mockito.times(1)).delete(ID);
 	}
+
 	@Test
 	public void totalTest() {
 		final long orderId = 1L;
 		List<OrderLines> x = new ArrayList<>();
 		x.add(new OrderLines(1L, 1L, 8L));
 		final Item y = new Item("test item", 500.25d);
-		
+
 		Mockito.when(iDao.read(orderId)).thenReturn(y);
 		Mockito.when(utils.getLong()).thenReturn(orderId);
 		Mockito.when(daoLines.readOrderId(orderId)).thenReturn(x);
-		double expected = 8*500.25d, actual = this.controller.total();
-		
+		double expected = 8 * 500.25d, actual = this.controller.total();
+
 		assertTrue(expected == actual);
-		
+
 		Mockito.verify(utils, Mockito.times(1)).getLong();
 		Mockito.verify(daoLines, Mockito.times(1)).readOrderId(orderId);
 	}
 
+	@Test
+	public void readOrderTest() {
+		final long orderId = 1L;
+		List<OrderLines> x = new ArrayList<>();
+		x.add(new OrderLines(1L, 1L, 8L));
+
+		Mockito.when(daoLines.readOrderId(orderId)).thenReturn(x);
+		Mockito.when(utils.getLong()).thenReturn(orderId);
+
+		assertEquals(x, this.controller.readOrder());
+
+		Mockito.verify(utils, Mockito.times(1)).getLong();
+		Mockito.verify(daoLines, Mockito.times(1)).readOrderId(orderId);
+
+	}
 
 }
